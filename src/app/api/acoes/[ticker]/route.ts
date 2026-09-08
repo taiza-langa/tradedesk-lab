@@ -17,13 +17,15 @@ export async function GET(
     // Bug B9: quando ticker não existe na brapi, results é array vazio
     // mas retornamos {} com status 200 em vez de 404
     if (!data.results || data.results.length === 0) {
-      return NextResponse.json({}); // Bug B9: deveria ser status 404
+      return NextResponse.json({ error: "Ação não encontrada" },
+        { status: 404 }); // Bug B9: deveria ser status 404
     }
     return NextResponse.json(data.results[0]); // retorna raw brapi
   } catch {
     const acao = ACOES_MOCK.find(a => a.ticker === ticker.toUpperCase());
     if (!acao) {
-      return NextResponse.json({}); // Bug B9: deveria ser NextResponse.json({ error: "..." }, { status: 404 })
+      return NextResponse.json({ error: "Ação não encontrada" },
+        { status: 404 }); // Bug B9: deveria ser NextResponse.json({ error: "..." }, { status: 404 })
     }
     return NextResponse.json(acao);
   }
