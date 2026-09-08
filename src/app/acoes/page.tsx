@@ -1,26 +1,14 @@
-"use client";
 // Bug B7: página de listagem como Client Component usando useEffect
 // Deveria ser um Server Component async buscando os dados diretamente
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Acao } from "@/types/acao";
 
-export default function AcoesPage() {
-  const [acoes, setAcoes] = useState<Acao[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/acoes")
-      .then(r => r.json())
-      .then(data => { setAcoes(data); setLoading(false); });
-  }, []);
-
-  if (loading) return (
-    <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "2rem", color: "#888" }}>
-      Carregando cotações...
-    </div>
-  );
+export default async function AcoesPage() {
+  const res = await fetch("http://localhost:3000/api/acoes", {
+    cache: "no-store",
+  });
+  const acoes: Acao[] = await res.json();
 
   return (
     <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "2rem" }}>
@@ -42,7 +30,7 @@ export default function AcoesPage() {
               <td style={{ padding: "1rem", fontWeight: 700, color: "#f59e0b" }}>{acao.symbol ?? acao.ticker}</td>
               <td style={{ padding: "1rem", color: "#888", fontSize: "0.85rem" }}>{acao.shortName ?? acao.nome}</td>
               <td style={{ padding: "1rem", textAlign: "right" }}>R$ {(acao.regularMarketPrice ?? acao.preco)?.toFixed(2) ?? "—"}</td>
-              <td style={{ padding: "1rem", textAlign: "right" }} className={(( acao.regularMarketChangePercent ?? acao.variacao) ?? 0) >= 0 ? "positivo" : "negativo"}>
+              <td style={{ padding: "1rem", textAlign: "right" }} className={((acao.regularMarketChangePercent ?? acao.variacao) ?? 0) >= 0 ? "positivo" : "negativo"}>
                 {((acao.regularMarketChangePercent ?? acao.variacao) ?? 0) >= 0 ? "▲" : "▼"} {Math.abs((acao.regularMarketChangePercent ?? acao.variacao) ?? 0).toFixed(2)}%
               </td>
               <td style={{ padding: "1rem", textAlign: "right", color: "#888", fontSize: "0.8rem" }}>{((acao.regularMarketVolume ?? acao.volume) ?? 0).toLocaleString("pt-BR")}</td>
