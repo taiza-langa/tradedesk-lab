@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Header from "@/components/Header"; // coloquei o Header aqui e no layout.tsx pq as vezes ele sumia, assim garanto kkk
 import MercadoStatus from "@/components/MercadoStatus";
 
 export default async function HomePage() {
