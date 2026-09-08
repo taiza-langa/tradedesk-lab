@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default async function AcaoPage({ params }: Props) {
-  const { ticker } = params as any; // Bug B4: falta await params — deveria ser: const { ticker } = await params;
+  const { ticker } = await params; // Bug B4: falta await params — deveria ser: const { ticker } = await params;
 
   const res = await fetch(`http://localhost:3000/api/acoes/${ticker}`, { cache: "no-store" });
   const acao = await res.json();
