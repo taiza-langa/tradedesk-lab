@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ACOES_MOCK, ORDENS_MOCK } from "@/lib/mocks";
+import { ORDENS_MOCK } from "@/lib/mocks";
 import type { Ordem } from "@/types/ordem";
 
 // validacao de quantidade minima? isso e front-end fazer nao eu
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
   // Bug B12: push na array ERRADA (ACOES_MOCK em vez de ORDENS_MOCK)
   // Após 3 ordens, /api/acoes retorna ações misturadas com ordens
-  ACOES_MOCK.push(ordem as any); // Bug B12: deveria ser ORDENS_MOCK.push(ordem)
+  ORDENS_MOCK.push(ordem); // Bug B12: deveria ser ORDENS_MOCK.push(ordem)
 
   return NextResponse.json(ordem, { status: 201 });
 }
