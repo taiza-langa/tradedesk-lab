@@ -13,6 +13,13 @@ export async function POST(req: Request) {
   // Bug B10: sem validação de cota mínima (mínimo deveria ser 100 ações)
   // Bug B10: aceita quantidade 0 ou negativa
 
+  if (!body.quantidade || body.quantidade < 100) {
+    return NextResponse.json(
+      { error: "A quantidade mínima é de 100 ações" },
+      { status: 400 }
+    );
+  }
+
   const ordem: Ordem = {
     id: crypto.randomUUID(),
     ticker: body.ticker,
