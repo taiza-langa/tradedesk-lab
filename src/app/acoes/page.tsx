@@ -48,7 +48,7 @@ export default function AcoesPage() {
               <td style={{ padding: "1rem", textAlign: "right", color: "#888", fontSize: "0.8rem" }}>{((acao.regularMarketVolume ?? acao.volume) ?? 0).toLocaleString("pt-BR")}</td>
               <td style={{ padding: "1rem" }}>
                 {/* Bug B6: href com "ticker" literal em vez de valor dinâmico */}
-                <Link href="/acoes/ticker" style={{ background: "#1a2a1a", border: "1px solid #22c55e", color: "#22c55e", padding: "0.35rem 0.75rem", borderRadius: 4, textDecoration: "none", fontSize: "0.8rem" }}>
+                <Link href={`/acoes/${acao.symbol ?? acao.ticker}`} style={{ background: "#1a2a1a", border: "1px solid #22c55e", color: "#22c55e", padding: "0.35rem 0.75rem", borderRadius: 4, textDecoration: "none", fontSize: "0.8rem" }}>
                   Ver →
                 </Link>
               </td>
