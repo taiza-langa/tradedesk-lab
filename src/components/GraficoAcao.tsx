@@ -9,8 +9,6 @@ interface Props {
 }
 
 // Bug B8: dado sensível visível no DevTools
-const COMISSAO_SECRETA = 0.003;
-console.log("Comissão aplicada:", COMISSAO_SECRETA);
 
 export default function GraficoAcao({ acao}: Props) {
   // Gráfico fake — barras estáticas representando variação de preço
